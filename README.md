@@ -96,18 +96,6 @@ Mistral Model
 
 ---
 
-## 📚 Documentation
-
-| Document | Purpose |
-|---|---|
-| **[PROJECT_SETUP.md](PROJECT_SETUP.md)** | ⭐ **Start here** - Complete setup guide |
-| **[OLLAMA_CONFIG.md](OLLAMA_CONFIG.md)** | Detailed Ollama configuration |
-| **[CHATBOT_SUMMARY.md](CHATBOT_SUMMARY.md)** | Chatbot features documentation |
-| **[TROUBLESHOOTING.md](TROUBLESHOOTING.md)** | Common issues & solutions |
-| **[CODE_OPTIMIZATION_SUMMARY.md](CODE_OPTIMIZATION_SUMMARY.md)** | Code quality metrics |
-
----
-
 ## 📁 Project Structure
 
 ```
