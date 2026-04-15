@@ -16,22 +16,55 @@ app.post('/api/chat', async (req, res) => {
   try {
     const { message, history } = req.body;
 
-    const systemPrompt = `Transform user requests into professional, role-based prompts with:
-1. ACT AS [Role] - Define AI persona
-2. TASK - Clear instructions
-3. REQUIREMENTS - Quality standards
-4. FORMAT - Output structure
-5. CONTEXT - Important details
+    // ========== SYSTEM PROMPT ==========
+    // Structured prompt template for consistent, professional outputs
+    const systemPrompt = `You are a Professional Prompt Engineer.
 
-Return ONLY the enhanced prompt, ready for ChatGPT or Claude.`;
+Your role: Transform user requests into powerful, structured prompts.
+
+ALWAYS structure responses using this exact format:
+
+---
+ACT AS: [Specify the AI's role/expertise]
+Define what persona or expertise the AI should adopt.
+
+TASK: [Clear, specific instruction]
+What exactly should the AI do with the input?
+
+REQUIREMENTS: [Quality standards]
+List specific quality criteria, constraints, or special requirements.
+
+FORMAT: [Output structure]
+How should the output be formatted? (markdown, list, JSON, etc.)
+
+CONTEXT: [Background information]
+Any important context, examples, or special instructions?
+---
+
+RULES:
+- Make each section clear and actionable
+- Use bullet points for readability
+- Keep requirements concise but complete
+- Provide examples when helpful
+- Return ONLY the enhanced prompt structure
+- Do NOT add explanation or preamble`;
+
+    // Build conversation with history
+    let conversationText = systemPrompt + '\n\n---\n\n';
     
-    let conversationText = systemPrompt + '\n\nRequest to enhance:\n';
-    if (history && Array.isArray(history)) {
-      history.forEach(msg => {
-        conversationText += msg.role === 'user' ? `User: ${msg.content}\n` : `Enhanced: ${msg.content}\n`;
+    if (history && Array.isArray(history) && history.length > 0) {
+      conversationText += 'CONVERSATION HISTORY:\n';
+      history.forEach((msg, idx) => {
+        if (msg.role === 'user') {
+          conversationText += `\n[User Request ${idx + 1}]\n${msg.content}\n`;
+        } else {
+          conversationText += `\n[Enhanced Prompt ${idx + 1}]\n${msg.content}\n`;
+        }
       });
+      conversationText += '\n---\n\n';
     }
-    conversationText += `User: ${message}\nEnhanced:`;
+
+    conversationText += `Now enhance this request:\n\n"${message}"\n\nProvide the enhanced prompt:`;
 
     const response = await axios.post(
       OLLAMA_URL,
@@ -39,20 +72,23 @@ Return ONLY the enhanced prompt, ready for ChatGPT or Claude.`;
         model: 'mistral',
         prompt: conversationText,
         stream: false,
-        temperature: 0.4,
+        temperature: 0.5,
+        top_p: 0.9,
+        top_k: 40,
       },
       { timeout: 180000 }
     );
 
-    res.json({ response: response.data.response?.trim() || 'Please provide a prompt to enhance.' });
+    const enhancedPrompt = response.data.response?.trim() || 'Please provide a clearer request to enhance.';
+    res.json({ response: enhancedPrompt });
   } catch (error) {
     if (error.message.includes('ECONNREFUSED')) {
       return res.status(503).json({ 
-        error: 'Ollama not running. Run: ollama serve' 
+        error: 'Ollama not running. Start it with: ollama serve' 
       });
     }
     if (error.code === 'ECONNABORTED') {
-      return res.status(408).json({ error: 'Request timeout. Try again.' });
+      return res.status(408).json({ error: 'Request timeout (>3min). Try a simpler prompt.' });
     }
 
     res.status(500).json({ error: error.message || 'Server error' });
