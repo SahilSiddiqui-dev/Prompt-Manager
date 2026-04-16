@@ -29,8 +29,6 @@ npm run dev
 # 5. Open http://localhost:5173
 ```
 
-**For detailed setup**, see [PROJECT_SETUP.md](PROJECT_SETUP.md) or [OLLAMA_CONFIG.md](OLLAMA_CONFIG.md)
-
 ---
 
 ## 📋 Features
