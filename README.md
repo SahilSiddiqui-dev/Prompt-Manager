@@ -29,8 +29,6 @@ npm run dev
 # 5. Open http://localhost:5173
 ```
 
-**For detailed setup**, see [PROJECT_SETUP.md](PROJECT_SETUP.md) or [OLLAMA_CONFIG.md](OLLAMA_CONFIG.md)
-
 ---
 
 ## 📋 Features
@@ -93,18 +91,6 @@ Ollama API
     ↓ http://localhost:11434
 Mistral Model
 ```
-
----
-
-## 📚 Documentation
-
-| Document | Purpose |
-|---|---|
-| **[PROJECT_SETUP.md](PROJECT_SETUP.md)** | ⭐ **Start here** - Complete setup guide |
-| **[OLLAMA_CONFIG.md](OLLAMA_CONFIG.md)** | Detailed Ollama configuration |
-| **[CHATBOT_SUMMARY.md](CHATBOT_SUMMARY.md)** | Chatbot features documentation |
-| **[TROUBLESHOOTING.md](TROUBLESHOOTING.md)** | Common issues & solutions |
-| **[CODE_OPTIMIZATION_SUMMARY.md](CODE_OPTIMIZATION_SUMMARY.md)** | Code quality metrics |
 
 ---
 
@@ -243,13 +229,6 @@ npm run server
 ```bash
 ollama serve  # In separate terminal
 ```
-
-**Q: "Model loading. Wait 30 seconds"**
-- First request loads model into memory (~2-4 seconds)
-- Subsequent requests are faster
-
-See [TROUBLESHOOTING.md](TROUBLESHOOTING.md) for more issues.
-
 ---
 
 ## 📊 Performance
@@ -303,16 +282,6 @@ useEffect(() => {
   messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
 }, [messages]);
 ```
-
----
-
-## 🎓 Learning Path
-
-1. **Start**: [PROJECT_SETUP.md](PROJECT_SETUP.md) - Get it running
-2. **Understand**: This README - Learn the structure
-3. **Explore**: Look at `src/components/ChatbotAssistant.jsx`
-4. **Customize**: Modify system prompt in `server.js`
-5. **Deploy**: See [OLLAMA_CONFIG.md](OLLAMA_CONFIG.md)
 
 ---
 
