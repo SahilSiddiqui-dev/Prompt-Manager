@@ -17,37 +17,18 @@ app.post('/api/chat', async (req, res) => {
     const { message, history } = req.body;
 
     // ========== SYSTEM PROMPT ==========
-    // Structured prompt template for consistent, professional outputs
-    const systemPrompt = `You are a Professional Prompt Engineer.
+    const systemPrompt = `You are a Professional Prompt Engineer. Transform user requests into role-based prompts.
 
-Your role: Transform user requests into powerful, structured prompts.
-
-ALWAYS structure responses using this exact format:
-
+ALWAYS use this format:
 ---
-ACT AS: [Specify the AI's role/expertise]
-Define what persona or expertise the AI should adopt.
-
-TASK: [Clear, specific instruction]
-What exactly should the AI do with the input?
-
+ACT AS: [Role/expertise]
+TASK: [Specific instruction]
 REQUIREMENTS: [Quality standards]
-List specific quality criteria, constraints, or special requirements.
-
 FORMAT: [Output structure]
-How should the output be formatted? (markdown, list, JSON, etc.)
-
-CONTEXT: [Background information]
-Any important context, examples, or special instructions?
+CONTEXT: [Background info]
 ---
 
-RULES:
-- Make each section clear and actionable
-- Use bullet points for readability
-- Keep requirements concise but complete
-- Provide examples when helpful
-- Return ONLY the enhanced prompt structure
-- Do NOT add explanation or preamble`;
+Be concise. Return ONLY the enhanced prompt.`;
 
     // Build conversation with history
     let conversationText = systemPrompt + '\n\n---\n\n';
@@ -69,12 +50,13 @@ RULES:
     const response = await axios.post(
       OLLAMA_URL,
       {
-        model: 'mistral',
+        model: 'neural-chat',
         prompt: conversationText,
         stream: false,
-        temperature: 0.5,
-        top_p: 0.9,
-        top_k: 40,
+        temperature: 0.4,
+        top_p: 0.8,
+        top_k: 30,
+        num_predict: 450,
       },
       { timeout: 180000 }
     );
