@@ -1,6 +1,6 @@
 # Prompt Manager WebApp with Ollama
 
-A professional prompt enhancement tool that transforms simple user requests into structured, high-quality prompts using **Ollama** (local AI) and **Mistral** model.
+A professional prompt enhancement tool that transforms simple user requests into structured, high-quality prompts using **Ollama** (local AI) and **Nueral-Chat** model.
 
 **Perfect for**: Content creators, developers, writers, students who want to write better prompts for ChatGPT, Claude, or other AI tools.
 
