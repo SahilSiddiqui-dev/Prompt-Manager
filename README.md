@@ -79,7 +79,7 @@ Output: ACT AS, TASK, REQUIREMENTS, FORMAT, CONTEXT structure
 |---|---|
 | **Node.js + Express** | REST API server |
 | **Ollama** | Local LLM service |
-| **Mistral 7B** | Language model |
+| **Neural-Chat** | Language model |
 
 ### Architecture
 ```
@@ -211,78 +211,10 @@ VITE_API_URL=http://localhost:3001
 ### Backend Settings (`server.js`)
 ```javascript
 PORT = 3001
-MODEL = 'mistral'
+MODEL = 'neural-chat'
 OLLAMA_URL = 'http://localhost:11434/api/generate'
 TIMEOUT = 180000  // 3 minutes
 ```
-
----
-
-## 🐛 Troubleshooting
-
-**Q: "Backend server not running"**
-```bash
-npm run server
-```
-
-**Q: "Ollama not running"**
-```bash
-ollama serve  # In separate terminal
-```
----
-
-## 📊 Performance
-
-- **Response time**: 2-5 seconds (Mistral model)
-- **Model size**: 7B parameters
-- **Memory usage**: ~4-5 GB
-- **Timeout**: 3 minutes for long responses
-
-### Model Options
-| Model | Speed | Quality | Memory |
-|---|---|---|---|
-| neural-chat | ⚡ Fast | Good | 4GB |
-| **mistral** | ✅ Balanced | Good | 4GB |
-| dolphin-mixtral | 🐢 Slower | Best | 26GB |
-
----
-
-## 🔐 Security
-
-### Development
-- ✅ CORS enabled (localhost only)
-- ✅ Local Ollama (no internet exposure)
-- ✅ No API keys required
-
-### For Production
-- Add authentication
-- Enable HTTPS
-- Implement rate limiting
-- Deploy Ollama securely or use cloud API
-- Add input validation
-
----
-
-## 📝 React Hooks Used
-
-```jsx
-// Theme
-const { theme, toggleTheme } = useTheme();
-
-// Redux
-const dispatch = useDispatch();
-const prompts = useSelector(state => state.prompts.enhancedPrompts);
-
-// State
-const [messages, setMessages] = useState([]);
-const [loading, setLoading] = useState(false);
-
-// Side effects
-useEffect(() => {
-  messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-}, [messages]);
-```
-
 ---
 
 ## 📚 Resources
@@ -295,15 +227,5 @@ useEffect(() => {
 
 ---
 
-## ✅ Status
-
-- ✅ Frontend: Production ready
-- ✅ Backend: Production ready
-- ✅ Ollama integration: Tested & optimized
-- ✅ Documentation: Complete
-- ✅ Code quality: Linting passes
-
----
-
 **Created**: April 15, 2026  
-**Last Updated**: April 15, 2026
+**Last Updated**: April 22, 2026
